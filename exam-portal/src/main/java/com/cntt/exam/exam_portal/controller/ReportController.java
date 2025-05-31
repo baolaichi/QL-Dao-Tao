@@ -7,11 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ReportController {
 
     @GetMapping("/report/pdf")
-    public ResponseEntity<ByteArrayResource> exportPdf() {
+    public ResponseEntity<ByteArrayResource> exportPdf(HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        if (!"THANHTRA".equals(role) && !"ADMIN".equals(role)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8080/api/reports/pdf?semester=3&year=2023-2024";
 
@@ -23,4 +30,5 @@ public class ReportController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
     }
+
 }

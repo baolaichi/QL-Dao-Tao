@@ -2,11 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Cấu trúc đề thi</title>
+    <title>Biên bản bốc thăm</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
+            background-color: #f2f2f2;
             padding: 20px;
         }
 
@@ -15,25 +15,27 @@
         }
 
         form {
-            background-color: #fff;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
-            max-width: 500px;
-            margin-bottom: 30px;
+            width: 450px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
         }
 
-        form input[type="text"] {
+        form input[type="text"],
+        form input[type="date"],
+        form input[type="number"] {
             width: 100%;
             padding: 10px;
-            margin: 6px 0 16px;
+            margin: 6px 0 16px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
 
         form button {
             background-color: #28a745;
-            color: #fff;
+            color: white;
             padding: 10px 16px;
             border: none;
             border-radius: 4px;
@@ -47,7 +49,7 @@
         table {
             border-collapse: collapse;
             width: 100%;
-            background-color: #fff;
+            background-color: #ffffff;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
@@ -64,7 +66,7 @@
 
         .back-btn {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 10px;
             padding: 8px 14px;
             background-color: #007bff;
             color: white;
@@ -80,28 +82,31 @@
 </head>
 <body>
 
-<h2>Nhập Cấu trúc đề thi</h2>
-<form action="/structure/save" method="post">
+<h2>Nhập Biên bản bốc thăm</h2>
+<form action="/draw/save" method="post">
     Môn học: <input name="subjectName" type="text" required />
     Mã môn: <input name="subjectCode" type="text" required />
-    Loại đề: <input name="examType" type="text" required />
     Kỳ: <input name="semester" type="text" value="3" required />
     Năm học: <input name="academicYear" type="text" value="2023-2024" required />
-    Mức độ: <input name="difficultyLevel" type="text" required />
-    Mô tả: <input name="structureDescription" type="text" required />
+    Ngày thi: <input name="examDate" type="date" required />
+    Ca thi: <input name="examShift" type="text" required />
+    Số đề: <input name="numberOfQuestions" type="number" required />
+    Ghi chú: <input name="note" type="text" />
     <button type="submit">Lưu</button>
 </form>
 
-<h3>Danh sách Cấu trúc đề thi</h3>
+<h3>Danh sách Biên bản bốc thăm</h3>
 <table>
     <tr>
         <th>Môn học</th>
-        <th>Mô tả</th>
+        <th>Ngày thi</th>
+        <th>Số đề</th>
     </tr>
-    <c:forEach var="s" items="${structures}">
+    <c:forEach var="d" items="${drawReports}">
         <tr>
-            <td>${s.subjectName}</td>
-            <td>${s.structureDescription}</td>
+            <td>${d.subjectName}</td>
+            <td>${d.examDate}</td>
+            <td>${d.numberOfQuestions}</td>
         </tr>
     </c:forEach>
 </table>

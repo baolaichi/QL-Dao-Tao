@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.cntt.exam.exam_portal.dto.ExamStructureDTO;
 import com.cntt.exam.exam_portal.service.ApiService;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.util.List;
 
 @Controller
@@ -18,8 +20,16 @@ public class StructureController {
     private ApiService apiService;
 
     @GetMapping
-    public String showStructurePage(Model model) {
-        List<ExamStructureDTO> list = apiService.fetchStructures(3, "2023-2024");
+    public String showStructurePage(HttpSession session, Model model,
+            @RequestParam(defaultValue = "3") int semester,
+            @RequestParam(defaultValue = "2023-2024") String year) {
+
+        String role = (String) session.getAttribute("role");
+        if (!"GIANGVIEN".equals(role) && !"ADMIN".equals(role)) {
+            return "redirect:/dashboard";
+        }
+
+        List<ExamStructureDTO> list = apiService.fetchStructures(semester, year);
         model.addAttribute("structures", list);
         model.addAttribute("structureForm", new ExamStructureDTO());
         return "structure";
