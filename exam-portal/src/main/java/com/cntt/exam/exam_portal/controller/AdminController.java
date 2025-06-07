@@ -23,7 +23,7 @@ public class AdminController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String BASE_URL = "http://localhost:8080/api/users";
+    private final String BASE_URL = "http://localhost:8080/api/users/list";
 
     @GetMapping
     public String userList(@RequestParam(value = "keyword", required = false) String keyword,

@@ -3,6 +3,7 @@ package com.cntt.exam.exam_portal.model;
 import java.util.List;
 
 public class ExamCombinationDTO {
+    private Long id;
     private String subjectName;
     private String subjectCode;
     private String examType;
@@ -12,6 +13,15 @@ public class ExamCombinationDTO {
     private String note;
 
     // getters & setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getSubjectName() {
         return subjectName;
     }

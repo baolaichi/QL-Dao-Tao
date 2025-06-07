@@ -3,6 +3,9 @@ package com.cntt.exam.report_service.service;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -59,6 +62,62 @@ public class ReportService {
         return out;
     }
 
+    public ByteArrayOutputStream generateExcelReport(int semester, String year) throws Exception {
+        List<ExamStructureDTO> structures = fetchStructures(semester, year);
+        List<ExamCombinationDTO> combinations = fetchCombinations(semester, year);
+        List<DrawReportDTO> draws = fetchDraws(semester, year);
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        
+        // Sheet 1: Cấu trúc đề thi
+        XSSFSheet structureSheet = workbook.createSheet("Cấu trúc đề thi");
+        Row structureHeader = structureSheet.createRow(0);
+        structureHeader.createCell(0).setCellValue("Môn học");
+        structureHeader.createCell(1).setCellValue("Cấu trúc");
+        
+        int rowIndex = 1;
+        for (var s : structures) {
+            Row row = structureSheet.createRow(rowIndex++);
+            row.createCell(0).setCellValue(s.getSubjectName());
+            row.createCell(1).setCellValue(s.getStructureDescription());
+        }
+
+        // Sheet 2: Tổ hợp đề thi
+        XSSFSheet combinationSheet = workbook.createSheet("Tổ hợp đề thi");
+        Row combinationHeader = combinationSheet.createRow(0);
+        combinationHeader.createCell(0).setCellValue("Môn học");
+        combinationHeader.createCell(1).setCellValue("Mã đề");
+        
+        rowIndex = 1;
+        for (var c : combinations) {
+            Row row = combinationSheet.createRow(rowIndex++);
+            row.createCell(0).setCellValue(c.getSubjectName());
+            row.createCell(1).setCellValue(String.join(", ", c.getQuestionCodes()));
+        }
+
+        // Sheet 3: Biên bản bốc thăm
+        XSSFSheet drawSheet = workbook.createSheet("Biên bản bốc thăm");
+        Row drawHeader = drawSheet.createRow(0);
+        drawHeader.createCell(0).setCellValue("Môn học");
+        drawHeader.createCell(1).setCellValue("Ngày thi");
+        drawHeader.createCell(2).setCellValue("Ca thi");
+        drawHeader.createCell(3).setCellValue("Số đề");
+        
+        rowIndex = 1;
+        for (var d : draws) {
+            Row row = drawSheet.createRow(rowIndex++);
+            row.createCell(0).setCellValue(d.getSubjectName());
+            row.createCell(1).setCellValue(d.getExamDate().toString());
+            row.createCell(2).setCellValue(d.getExamShift());
+            row.createCell(3).setCellValue(d.getNumberOfQuestions());
+        }
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        workbook.write(out);
+        workbook.close();
+        return out;
+    }
+
     private List<ExamStructureDTO> fetchStructures(int semester, String year) {
         String url = STRUCTURE_URL + semester + "?year=" + year;
         ResponseEntity<ExamStructureDTO[]> response = restTemplate.getForEntity(url, ExamStructureDTO[].class);
@@ -76,5 +135,4 @@ public class ReportService {
         ResponseEntity<DrawReportDTO[]> response = restTemplate.getForEntity(url, DrawReportDTO[].class);
         return List.of(response.getBody());
     }
-
 }

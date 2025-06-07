@@ -64,7 +64,7 @@
             color: white;
         }
 
-        .back-btn {
+        .back-btn, .download-btn {
             display: inline-block;
             margin-top: 10px;
             padding: 8px 14px;
@@ -75,8 +75,27 @@
             font-weight: bold;
         }
 
-        .back-btn:hover {
+        .back-btn:hover, .download-btn:hover {
             background-color: #0056b3;
+        }
+
+        .download-form {
+            background-color: #ffffff;
+            padding: 16px;
+            margin-bottom: 20px;
+            width: 450px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .download-form input {
+            width: 40%;
+            padding: 8px;
+            margin-right: 8px;
+        }
+
+        .download-form button {
+            padding: 8px 16px;
         }
     </style>
 </head>
@@ -93,6 +112,14 @@
     Số đề: <input name="numberOfQuestions" type="number" required />
     Ghi chú: <input name="note" type="text" />
     <button type="submit">Lưu</button>
+</form>
+
+<!-- Tải biên bản bốc thăm -->
+<h3>Tải biên bản bốc thăm</h3>
+<form action="/draw/export" method="get" class="download-form">
+    Kỳ: <input name="semester" type="number" value="3" required />
+    Năm học: <input name="year" type="text" value="2023-2024" required />
+    <button type="submit" class="download-btn">Tải biên bản</button>
 </form>
 
 <h3>Danh sách Biên bản bốc thăm</h3>

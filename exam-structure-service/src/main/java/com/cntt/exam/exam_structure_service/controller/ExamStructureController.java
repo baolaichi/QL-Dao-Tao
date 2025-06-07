@@ -2,12 +2,16 @@ package com.cntt.exam.exam_structure_service.controller;
 
 import java.util.List;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import com.cntt.exam.exam_structure_service.model.ExamStructure;
 import com.cntt.exam.exam_structure_service.service.ExamStructureService;
@@ -53,6 +57,21 @@ public class ExamStructureController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         eService.deleteExamStructure(id);
+    }
+
+    @GetMapping("/report/pdf")
+    public ResponseEntity<ByteArrayResource> getReportPdf(
+            @RequestParam int semester,
+            @RequestParam String year) {
+
+        byte[] pdf = eService.generateReportPdf(semester, year);
+        ByteArrayResource resource = new ByteArrayResource(pdf);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=baocao_hk" + semester + ".pdf")
+                .contentLength(pdf.length)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
     }
 
 }

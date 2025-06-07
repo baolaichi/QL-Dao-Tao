@@ -17,4 +17,6 @@ public interface ExamStructureService {
     ExamStructure updateExamStructure(Long id, ExamStructure examStructure);
 
     void deleteExamStructure(Long id);
+
+    byte[] generateReportPdf(int semester, String academicYear);
 }

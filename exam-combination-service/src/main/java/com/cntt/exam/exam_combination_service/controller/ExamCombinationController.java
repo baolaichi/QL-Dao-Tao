@@ -1,13 +1,21 @@
 package com.cntt.exam.exam_combination_service.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import com.cntt.exam.exam_combination_service.model.ExamCombination;
+import com.cntt.exam.exam_combination_service.repository.ExamCombinationRepository;
 import com.cntt.exam.exam_combination_service.service.ExamCombinationService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +29,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 @CrossOrigin
 public class ExamCombinationController {
     private ExamCombinationService eService;
+    @Autowired
+    private ExamCombinationRepository examCombinationRepository;
 
     public ExamCombinationController(ExamCombinationService eService) {
         this.eService = eService;
@@ -56,4 +66,23 @@ public class ExamCombinationController {
         eService.delete(id);
     }
 
+    @GetMapping("/export/{id}")
+    public ResponseEntity<byte[]> exportReport(@PathVariable Long id) throws IOException {
+        // Lấy ExamCombination từ service
+        ExamCombination exam = eService.getAll()
+                .stream().filter(e -> e.getId().equals(id)).findFirst()
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy tổ hợp đề thi"));
+
+        // Gọi đúng method generateReport từ service
+        byte[] reportBytes = eService.generateReport(exam);
+
+        // Tạo header để trả về file .docx
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.attachment()
+                .filename("tohop_dethi_" + id + ".docx")
+                .build());
+
+        return new ResponseEntity<>(reportBytes, headers, HttpStatus.OK);
+    }
 }

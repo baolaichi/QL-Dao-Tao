@@ -1,9 +1,14 @@
 package com.cntt.exam.exam_portal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import com.cntt.exam.exam_portal.dto.ExamCombinationDTO;
 import com.cntt.exam.exam_portal.service.ApiService;
@@ -48,4 +53,23 @@ public class CombinationController {
         apiService.saveCombination(dto);
         return "redirect:/combination";
     }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<byte[]> downloadCombination(@PathVariable Long id, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        if (!"GIANGVIEN".equals(role) && !"ADMIN".equals(role)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        byte[] fileBytes = apiService.downloadCombinationReport(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.attachment()
+                .filename("tohop_dethi_" + id + ".docx")
+                .build());
+
+        return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
+    }
+
 }

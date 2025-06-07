@@ -1,9 +1,14 @@
 package com.cntt.exam.exam_portal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 
 import com.cntt.exam.exam_portal.dto.DrawReportDTO;
 import com.cntt.exam.exam_portal.service.ApiService;
@@ -47,5 +52,21 @@ public class DrawController {
 
         apiService.saveDrawReport(dto);
         return "redirect:/draw";
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> downloadDrawReport(@RequestParam int semester,
+            @RequestParam String year,
+            HttpSession session) {
+        // Nếu có kiểm tra quyền thì thêm ở đây
+        byte[] file = apiService.downloadDrawReport(semester, year);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.attachment()
+                .filename("bien_ban_boc_tham_HK" + semester + "_" + year + ".docx")
+                .build());
+
+        return new ResponseEntity<>(file, headers, HttpStatus.OK);
     }
 }

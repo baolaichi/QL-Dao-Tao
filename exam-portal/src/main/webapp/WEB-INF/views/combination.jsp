@@ -55,8 +55,8 @@
         }
 
         table {
-            width: 90%;
-            margin: 0 auto;
+            width: 95%;
+            margin: 20px auto;
             border-collapse: collapse;
             background-color: white;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -75,6 +75,28 @@
         th {
             background-color: #007bff;
             color: white;
+        }
+
+        .btn-download {
+            display: inline-block;
+            padding: 6px 10px;
+            color: #fff;
+            background-color: #28a745;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-download:hover {
+            background-color: #218838;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
@@ -104,22 +126,27 @@
     <input name="note" id="note" />
 
     <button type="submit">Lưu</button>
-    <a href="/dashboard" style="text-decoration: none;">
-    <button type="button">Quay lại</button>
-</a>
-
+    <button type="button" class="btn-back" onclick="window.location.href='/dashboard'">Quay lại</button>
 </form>
 
-<h3>Danh sách tổ hợp</h3>
+<h3>Danh sách tổ hợp đề thi</h3>
 <table>
     <tr>
         <th>Môn học</th>
+        <th>Mã môn</th>
+        <th>Loại đề</th>
         <th>Mã câu hỏi</th>
+        <th>Hành động</th>
     </tr>
-    <c:forEach var="c" items="${combinations}">
+    <c:forEach var="combo" items="${combinations}">
         <tr>
-            <td>${c.subjectName}</td>
-            <td>${c.questionCodes}</td>
+            <td>${combo.subjectName}</td>
+            <td>${combo.subjectCode}</td>
+            <td>${combo.examType}</td>
+            <td>${combo.questionCodes}</td>
+            <td>
+                <a href="/combination/download/${combo.id}" class="btn-download">Tải báo cáo</a>
+            </td>
         </tr>
     </c:forEach>
 </table>

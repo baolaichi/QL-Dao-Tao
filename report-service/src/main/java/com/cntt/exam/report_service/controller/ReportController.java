@@ -30,4 +30,13 @@ public class ReportController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdf.toByteArray());
     }
+
+    @GetMapping("/excel")
+    public ResponseEntity<byte[]> exportExcel(@RequestParam int semester, @RequestParam String year) throws Exception {
+        ByteArrayOutputStream excel = reportService.generateExcelReport(semester, year);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=baocao_hk" + semester + ".xlsx")
+                .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                .body(excel.toByteArray());
+    }
 }

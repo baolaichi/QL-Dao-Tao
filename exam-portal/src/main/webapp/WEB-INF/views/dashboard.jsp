@@ -86,8 +86,7 @@
         </c:if>
 
         <c:if test="${sessionScope.role == 'THANHTRA' || sessionScope.role == 'ADMIN'}">
-            <a href="/report/pdf">Tải PDF</a>
-            <a href="/admin/users/export" class="btn btn-success">📥 Xuất Excel</a>
+            <a href="/report/" class="btn btn-success">📊 Xuất Báo cáo</a>
         </c:if>
 
         <c:if test="${sessionScope.role == 'ADMIN'}">

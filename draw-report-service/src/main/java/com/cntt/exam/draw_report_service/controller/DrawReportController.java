@@ -8,7 +8,12 @@ import com.cntt.exam.draw_report_service.service.DrawReportService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.IOException;
 import java.util.List;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.ContentDisposition;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +58,20 @@ public class DrawReportController {
     @DeleteMapping("{id}")
     public void deleteReport(@PathVariable Long id) {
         drawReportService.deleteReport(id);
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportDrawReport(@RequestParam int semester, @RequestParam String year)
+            throws IOException {
+        byte[] file = drawReportService.exportReport(semester, year);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.attachment()
+                .filename("bien_ban_boc_tham_HK" + semester + "_" + year + ".docx")
+                .build());
+
+        return ResponseEntity.ok().headers(headers).body(file);
     }
 
 }

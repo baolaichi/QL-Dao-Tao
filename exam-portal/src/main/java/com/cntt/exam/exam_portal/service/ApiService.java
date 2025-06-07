@@ -58,4 +58,18 @@ public class ApiService {
         HttpEntity<DrawReportDTO> request = new HttpEntity<>(dto);
         restTemplate.postForEntity(url, request, Void.class);
     }
+
+    // ------------------- COMBINATION -------------------
+    public byte[] downloadCombinationReport(Long id) {
+        String url = GATEWAY_BASE_URL + "/api/combinations/export/" + id;
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class);
+        return response.getBody();
+    }
+
+    public byte[] downloadDrawReport(int semester, String year) {
+        String url = GATEWAY_BASE_URL + "/api/draw-reports/export?semester=" + semester + "&year=" + year;
+        ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class);
+        return response.getBody();
+    }
+
 }
