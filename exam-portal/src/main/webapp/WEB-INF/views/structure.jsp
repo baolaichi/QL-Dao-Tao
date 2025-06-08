@@ -1,112 +1,96 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>Cấu trúc đề thi</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            padding: 20px;
-        }
-
-        h2, h3 {
-            color: #333;
-        }
-
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 500px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        form input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin: 6px 0 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        form button {
-            background-color: #28a745;
-            color: #fff;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        form button:hover {
-            background-color: #218838;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            background-color: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        table th, table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .back-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 8px 14px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        .back-btn:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Nhập Cấu trúc đề thi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
+<body style="background-color: #f8f9fa;">
+<jsp:include page="/WEB-INF/views/layout/header.jsp" />
 
-<h2>Nhập Cấu trúc đề thi</h2>
-<form action="/structure/save" method="post">
-    Môn học: <input name="subjectName" type="text" required />
-    Mã môn: <input name="subjectCode" type="text" required />
-    Loại đề: <input name="examType" type="text" required />
-    Kỳ: <input name="semester" type="text" value="3" required />
-    Năm học: <input name="academicYear" type="text" value="2023-2024" required />
-    Mức độ: <input name="difficultyLevel" type="text" required />
-    Mô tả: <input name="structureDescription" type="text" required />
-    <button type="submit">Lưu</button>
-</form>
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title mb-4">Nhập Cấu trúc đề thi</h3>
+            <form action="/structure/save" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Môn học</label>
+                        <input type="text" name="subjectName" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Mã môn</label>
+                        <input type="text" name="subjectCode" class="form-control" required>
+                    </div>
+                </div>
 
-<h3>Danh sách Cấu trúc đề thi</h3>
-<table>
-    <tr>
-        <th>Môn học</th>
-        <th>Mô tả</th>
-    </tr>
-    <c:forEach var="s" items="${structures}">
-        <tr>
-            <td>${s.subjectName}</td>
-            <td>${s.structureDescription}</td>
-        </tr>
-    </c:forEach>
-</table>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>Loại đề</label>
+                        <input type="text" name="examType" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Kỳ</label>
+                        <input type="text" name="semester" value="3" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Năm học</label>
+                        <input type="text" name="academicYear" value="2023-2024" class="form-control" required>
+                    </div>
+                </div>
 
-<a href="/dashboard" class="back-btn">← Quay lại trang chủ</a>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Mức độ</label>
+                        <input type="text" name="difficultyLevel" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Mô tả</label>
+                        <input type="text" name="structureDescription" class="form-control" required>
+                    </div>
+                </div>
 
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-save"></i> Lưu
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h4>Danh sách Cấu trúc đề thi</h4>
+        <table class="table table-bordered table-hover bg-white mt-3 shadow-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Môn học</th>
+                    <th>Mã môn</th>
+                    <th>Loại đề</th>
+                    <th>Kỳ</th>
+                    <th>Năm học</th>
+                    <th>Mức độ</th>
+                    <th>Mô tả</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="s" items="${structures}">
+                    <tr>
+                        <td>${s.subjectName}</td>
+                        <td>${s.subjectCode}</td>
+                        <td>${s.examType}</td>
+                        <td>${s.semester}</td>
+                        <td>${s.academicYear}</td>
+                        <td>${s.difficultyLevel}</td>
+                        <td>${s.structureDescription}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+        <a href="/dashboard" class="btn btn-primary mt-3">← Quay lại trang chủ</a>
+    </div>
+</div>
+    <jsp:include page="/WEB-INF/views/layout/footer.jsp" />
+<!-- Font Awesome (for save icon) -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>

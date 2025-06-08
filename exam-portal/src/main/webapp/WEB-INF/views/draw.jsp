@@ -3,142 +3,155 @@
 <html>
 <head>
     <title>Biên bản bốc thăm</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            padding: 20px;
+            background-color: #f8f9fa;
         }
 
-        h2, h3 {
-            color: #333;
+        .container {
+            margin-top: 30px;
         }
 
-        form {
-            background-color: #ffffff;
-            padding: 20px;
+        .form-section {
+            background-color: #fff;
+            padding: 24px;
             border-radius: 8px;
-            width: 450px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             margin-bottom: 30px;
         }
 
-        form input[type="text"],
-        form input[type="date"],
-        form input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin: 6px 0 16px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        .form-section h2,
+        .form-section h3 {
+            margin-bottom: 20px;
         }
 
-        form button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        form button:hover {
-            background-color: #218838;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        table th, table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        table th {
+        .btn-custom {
             background-color: #007bff;
             color: white;
+            font-weight: 500;
         }
 
-        .back-btn, .download-btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 14px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-
-        .back-btn:hover, .download-btn:hover {
+        .btn-custom:hover {
             background-color: #0056b3;
         }
 
-        .download-form {
-            background-color: #ffffff;
-            padding: 16px;
-            margin-bottom: 20px;
-            width: 450px;
+        .table-container {
+            background-color: #fff;
+            padding: 24px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .download-form input {
-            width: 40%;
-            padding: 8px;
-            margin-right: 8px;
+        .table th {
+            background-color: #007bff;
+            color: white;
         }
 
-        .download-form button {
-            padding: 8px 16px;
+        .back-btn {
+            margin-top: 20px;
+        }
+
+        .form-label {
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/layout/header.jsp" />
 
-<h2>Nhập Biên bản bốc thăm</h2>
-<form action="/draw/save" method="post">
-    Môn học: <input name="subjectName" type="text" required />
-    Mã môn: <input name="subjectCode" type="text" required />
-    Kỳ: <input name="semester" type="text" value="3" required />
-    Năm học: <input name="academicYear" type="text" value="2023-2024" required />
-    Ngày thi: <input name="examDate" type="date" required />
-    Ca thi: <input name="examShift" type="text" required />
-    Số đề: <input name="numberOfQuestions" type="number" required />
-    Ghi chú: <input name="note" type="text" />
-    <button type="submit">Lưu</button>
-</form>
+<div class="container">
+    <!-- Nhập Biên bản -->
+    <div class="form-section">
+        <h2>Nhập Biên bản bốc thăm</h2>
+        <form action="/draw/save" method="post">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Môn học</label>
+                    <input type="text" class="form-control" name="subjectName" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Mã môn</label>
+                    <input type="text" class="form-control" name="subjectCode" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Kỳ</label>
+                    <input type="text" class="form-control" name="semester" value="3" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Năm học</label>
+                    <input type="text" class="form-control" name="academicYear" value="2023-2024" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Ngày thi</label>
+                    <input type="date" class="form-control" name="examDate" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Ca thi</label>
+                    <input type="text" class="form-control" name="examShift" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Số đề</label>
+                    <input type="number" class="form-control" name="numberOfQuestions" required>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Ghi chú</label>
+                    <input type="text" class="form-control" name="note">
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Lưu</button>
+            </div>
+        </form>
+    </div>
 
-<!-- Tải biên bản bốc thăm -->
-<h3>Tải biên bản bốc thăm</h3>
-<form action="/draw/export" method="get" class="download-form">
-    Kỳ: <input name="semester" type="number" value="3" required />
-    Năm học: <input name="year" type="text" value="2023-2024" required />
-    <button type="submit" class="download-btn">Tải biên bản</button>
-</form>
+    <!-- Tải xuống biên bản -->
+    <div class="form-section">
+        <h3>Tải biên bản bốc thăm</h3>
+        <form action="/draw/export" method="get" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">Kỳ</label>
+                <input type="number" name="semester" value="3" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Năm học</label>
+                <input type="text" name="year" value="2023-2024" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-custom w-100"><i class="bi bi-download"></i> Tải biên bản</button>
+            </div>
+        </form>
+    </div>
 
-<h3>Danh sách Biên bản bốc thăm</h3>
-<table>
-    <tr>
-        <th>Môn học</th>
-        <th>Ngày thi</th>
-        <th>Số đề</th>
-    </tr>
-    <c:forEach var="d" items="${drawReports}">
-        <tr>
-            <td>${d.subjectName}</td>
-            <td>${d.examDate}</td>
-            <td>${d.numberOfQuestions}</td>
-        </tr>
-    </c:forEach>
-</table>
-
-<a href="/dashboard" class="back-btn">← Quay lại trang chủ</a>
-
+    <!-- Danh sách -->
+    <div class="table-container">
+        <h3>Danh sách Biên bản bốc thăm</h3>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Môn học</th>
+                    <th>Ngày thi</th>
+                    <th>Số đề</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="d" items="${drawReports}">
+                    <tr>
+                        <td>${d.subjectName}</td>
+                        <td>${d.examDate}</td>
+                        <td>${d.numberOfQuestions}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+        <a href="/dashboard" class="btn btn-outline-secondary back-btn"><i class="bi bi-arrow-left"></i> Quay lại trang chủ</a>
+    </div>
+</div>
+    <jsp:include page="/WEB-INF/views/layout/footer.jsp" />
 </body>
 </html>
