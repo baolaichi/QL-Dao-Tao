@@ -19,4 +19,6 @@ public interface DrawReportService {
     byte[] exportDrawReport(List<DrawReport> reports, int semester, String academicYear) throws IOException;
 
     public byte[] exportReport(int semester, String year) throws IOException;
+
+    DrawReport getById(Long id);
 }

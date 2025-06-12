@@ -69,4 +69,53 @@ public class DrawController {
 
         return new ResponseEntity<>(file, headers, HttpStatus.OK);
     }
+
+    @GetMapping("/view/{id}")
+    public String viewDrawReport(@PathVariable Long id, HttpSession session, Model model) {
+        String role = (String) session.getAttribute("role");
+        if (!"GIANGVIEN".equals(role) && !"ADMIN".equals(role)) {
+            return "redirect:/dashboard";
+        }
+
+        DrawReportDTO report = apiService.getDrawReportById(id);
+        model.addAttribute("draw", report);
+        return "draw/view"; // JSP riêng để hiển thị chi tiết
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editDrawReport(@PathVariable Long id, HttpSession session, Model model) {
+        String role = (String) session.getAttribute("role");
+        if (!"GIANGVIEN".equals(role) && !"ADMIN".equals(role)) {
+            return "redirect:/dashboard";
+        }
+
+        DrawReportDTO report = apiService.getDrawReportById(id);
+        model.addAttribute("drawForm", report);
+        return "draw/edit"; // JSP có form chỉnh sửa
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateDrawReport(@PathVariable Long id,
+            @ModelAttribute("drawForm") DrawReportDTO dto,
+            HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        if (!"GIANGVIEN".equals(role) && !"ADMIN".equals(role)) {
+            return "redirect:/dashboard";
+        }
+
+        apiService.updateDrawReport(id, dto);
+        return "redirect:/draw";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteDrawReport(@PathVariable Long id, HttpSession session) {
+        String role = (String) session.getAttribute("role");
+        if (!"GIANGVIEN".equals(role) && !"ADMIN".equals(role)) {
+            return "redirect:/dashboard";
+        }
+
+        apiService.deleteDrawReport(id);
+        return "redirect:/draw";
+    }
+
 }

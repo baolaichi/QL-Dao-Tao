@@ -48,9 +48,11 @@
     <div class="report-container">
         <h2 class="mb-4 text-primary"><i class="fas fa-chart-bar"></i> Tải Báo Cáo Cấu Trúc Đề Thi</h2>
         <p class="mb-4 text-muted">Bạn có thể tải báo cáo cấu trúc định dạng PDF tại đây:</p>
-        <a href="${pageContext.request.contextPath}/report/pdf" class="btn btn-success export-btn">
+        <a href="${pageContext.request.contextPath}/report/pdf/all" class="btn btn-success export-btn">
             <i class="fas fa-file-pdf"></i> Tải PDF
         </a>
+        <a href="/report/word/all" class="btn btn-outline-primary">Tải báo cáo cấu trúc đề thi (.docx)</a>
+
     </div>
 
     <div class="form-section">
@@ -65,7 +67,7 @@
                 <input type="text" name="year" value="2023-2024" class="form-control" required>
             </div>
             <div class="col-md-3">
-                <button type="submit" class="btn btn-custom w-100"><i class="bi bi-download"></i> Tải biên bản</button>
+                <button type="submit" class="btn btn-success w-100"><i class="bi bi-download"></i> Tải biên bản</button>
             </div>
         </form>
     </div>

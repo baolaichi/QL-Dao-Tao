@@ -74,4 +74,10 @@ public class DrawReportController {
         return ResponseEntity.ok().headers(headers).body(file);
     }
 
+    @GetMapping("/{id}")
+    public DrawReport getReportById(@PathVariable Long id) {
+         return drawReportService.getById(id);
+    }
+
+
 }

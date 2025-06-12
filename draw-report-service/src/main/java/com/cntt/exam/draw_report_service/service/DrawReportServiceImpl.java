@@ -152,4 +152,11 @@ public class DrawReportServiceImpl implements DrawReportService {
         doc.close();
         return out.toByteArray();
     }
+
+    @Override
+    public DrawReport getById(Long id) {
+        return drawReportRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Report not found with id " + id));
+    }
+    
 }

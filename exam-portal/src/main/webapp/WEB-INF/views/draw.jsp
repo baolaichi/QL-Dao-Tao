@@ -137,6 +137,7 @@
                     <th>Môn học</th>
                     <th>Ngày thi</th>
                     <th>Số đề</th>
+                    <th>Chức năng</th>
                 </tr>
             </thead>
             <tbody>
@@ -145,6 +146,19 @@
                         <td>${d.subjectName}</td>
                         <td>${d.examDate}</td>
                         <td>${d.numberOfQuestions}</td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/draw/view/${d.id}" class="btn btn-info btn-sm" title="Xem chi tiết">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="${pageContext.request.contextPath}/draw/edit/${d.id}" class="btn btn-warning btn-sm" title="Chỉnh sửa">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form action="${pageContext.request.contextPath}/draw/delete/${d.id}" method="post" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc muốn xóa biên bản này?');">
+                                <button type="submit" class="btn btn-danger btn-sm" title="Xóa">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>

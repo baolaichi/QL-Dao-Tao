@@ -86,7 +86,7 @@
 </head>
 <body>
     <div class="login-container">
-        <img src="logo.png" alt="Logo" class="logo" />
+        <img src="https://th.bing.com/th/id/R.aac7c4250f52078f539f4d6182a4a746?rik=tcM0yoiMD6OTRA&riu=http%3a%2f%2fwww.tnut.edu.vn%2fimg%2flogo.png&ehk=FqgEtmJ9AFa392v81q4G0TlQpn4pvpDkKRtC62lPDsA%3d&risl=&pid=ImgRaw&r=0" alt="Logo" class="logo" />
         <h2>Đăng nhập</h2>
 
         <!-- Thông báo lỗi -->

@@ -74,4 +74,34 @@ public class ExamStructureController {
                 .body(resource);
     }
 
+    @GetMapping("/{id}")
+    public ExamStructure getStructureById(@PathVariable Long id) {
+        return eService.getById(id);
+    }
+
+    @GetMapping("/report/pdf/all")
+    public ResponseEntity<ByteArrayResource> getAllStructuresPdf() {
+        byte[] pdf = eService.generateAllStructuresPdf(); // gọi service tạo toàn bộ PDF
+        ByteArrayResource resource = new ByteArrayResource(pdf);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=baocao_all.pdf")
+                .contentLength(pdf.length)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+    }
+
+    @GetMapping("/report/word/all")
+    public ResponseEntity<ByteArrayResource> getAllStructuresAsWord() {
+        byte[] docx = eService.exportAllStructuresAsWord();
+        ByteArrayResource resource = new ByteArrayResource(docx);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=baocao_cautruc.docx")
+                .contentLength(docx.length)
+                .contentType(MediaType
+                        .parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                .body(resource);
+    }
+
 }

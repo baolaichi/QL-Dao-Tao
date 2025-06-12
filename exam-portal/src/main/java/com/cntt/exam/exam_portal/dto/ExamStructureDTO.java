@@ -1,6 +1,7 @@
 package com.cntt.exam.exam_portal.dto;
 
 public class ExamStructureDTO {
+    private Long id;
     private String subjectName;
     private String subjectCode;
     private String examType;
@@ -8,6 +9,24 @@ public class ExamStructureDTO {
     private String academicYear;
     private String difficultyLevel;
     private String structureDescription;
+    private Integer credit;
+    private Integer duration;
+
+    public Integer getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Integer credit) {
+        this.credit = credit;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 
     public String getSubjectName() {
         return subjectName;
@@ -63,6 +82,14 @@ public class ExamStructureDTO {
 
     public void setStructureDescription(String structureDescription) {
         this.structureDescription = structureDescription;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     // Getters & Setters

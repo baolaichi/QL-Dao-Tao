@@ -25,5 +25,7 @@ public class ExamStructure {
 
     private String difficultyLevel;
     private String structureDescription;
+    private Integer credit;
+    private Integer duration;
 
 }

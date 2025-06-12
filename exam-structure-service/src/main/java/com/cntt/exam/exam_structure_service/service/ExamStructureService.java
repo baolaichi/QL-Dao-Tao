@@ -19,4 +19,10 @@ public interface ExamStructureService {
     void deleteExamStructure(Long id);
 
     byte[] generateReportPdf(int semester, String academicYear);
+
+    ExamStructure getById(Long id);
+
+    byte[] generateAllStructuresPdf();
+
+    byte[] exportAllStructuresAsWord();
 }

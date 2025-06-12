@@ -27,6 +27,13 @@ public class ApiService {
         return Arrays.asList(response.getBody());
     }
 
+    // Lấy tất cả cấu trúc đề thi (không lọc kỳ và năm)
+    public List<ExamStructureDTO> fetchAllStructures() {
+        String url = GATEWAY_BASE_URL + "/api/structures"; // Endpoint này cần hỗ trợ trả về toàn bộ
+        ResponseEntity<ExamStructureDTO[]> response = restTemplate.getForEntity(url, ExamStructureDTO[].class);
+        return Arrays.asList(response.getBody());
+    }
+
     public void saveStructure(ExamStructureDTO dto) {
         String url = GATEWAY_BASE_URL + "/api/structures";
         HttpEntity<ExamStructureDTO> request = new HttpEntity<>(dto);
@@ -70,6 +77,44 @@ public class ApiService {
         String url = GATEWAY_BASE_URL + "/api/draw-reports/export?semester=" + semester + "&year=" + year;
         ResponseEntity<byte[]> response = restTemplate.getForEntity(url, byte[].class);
         return response.getBody();
+    }
+
+    // Lấy một cấu trúc đề thi theo ID
+    public ExamStructureDTO getStructureById(Long id) {
+        String url = GATEWAY_BASE_URL + "/api/structures/" + id;
+        return restTemplate.getForObject(url, ExamStructureDTO.class);
+    }
+
+    // Cập nhật cấu trúc đề thi
+    public void updateStructure(ExamStructureDTO dto) {
+        String url = GATEWAY_BASE_URL + "/api/structures/" + dto.getId();
+        HttpEntity<ExamStructureDTO> request = new HttpEntity<>(dto);
+        restTemplate.exchange(url, HttpMethod.PUT, request, Void.class);
+    }
+
+    // Xóa cấu trúc đề thi
+    public void deleteStructure(Long id) {
+        String url = GATEWAY_BASE_URL + "/api/structures/" + id;
+        restTemplate.delete(url);
+    }
+
+    // Lấy một báo cáo bốc thăm theo ID
+    public DrawReportDTO getDrawReportById(Long id) {
+        String url = GATEWAY_BASE_URL + "/api/draw-reports/" + id;
+        return restTemplate.getForObject(url, DrawReportDTO.class);
+    }
+
+    // Cập nhật báo cáo bốc thăm
+    public void updateDrawReport(Long id, DrawReportDTO dto) {
+        String url = GATEWAY_BASE_URL + "/api/draw-reports/" + id;
+        HttpEntity<DrawReportDTO> request = new HttpEntity<>(dto);
+        restTemplate.exchange(url, HttpMethod.PUT, request, Void.class);
+    }
+
+    // Xóa báo cáo bốc thăm
+    public void deleteDrawReport(Long id) {
+        String url = GATEWAY_BASE_URL + "/api/draw-reports/" + id;
+        restTemplate.delete(url);
     }
 
 }

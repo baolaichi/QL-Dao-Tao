@@ -2,11 +2,15 @@ package com.cntt.exam.exam_portal.dto;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class DrawReportDTO {
+    private Long id;
     private String subjectName;
     private String subjectCode;
     private int semester;
     private String academicYear;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate examDate;
     private int examShift;
     private int numberOfQuestions;
@@ -74,6 +78,14 @@ public class DrawReportDTO {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

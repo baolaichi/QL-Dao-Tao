@@ -60,7 +60,7 @@
                     <li class="nav-item"><a class="nav-link" href="/draw">Biên bản bốc thăm</a></li>
                 </c:if>
                 <c:if test="${sessionScope.role == 'THANHTRA' || sessionScope.role == 'ADMIN'}">
-                    <li class="nav-item"><a class="nav-link" href="/report/">📊 Xuất Báo cáo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/report/">📊Báo cáo</a></li>
                 </c:if>
                 <c:if test="${sessionScope.role == 'ADMIN'}">
                     <li class="nav-item"><a class="nav-link" href="/admin/users">Quản lý người dùng</a></li>
