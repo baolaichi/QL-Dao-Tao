@@ -110,12 +110,11 @@ public class ReportController {
 
         try {
             RestTemplate restTemplate = new RestTemplate();
-            String url = "http://localhost:8080/api/structures/report/word/all"; // Gọi backend Word
+            String url = "http://localhost:8080/api/structures/report/word/all";
 
             HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(List.of(
-                    MediaType.parseMediaType(
-                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document")));
+            headers.setAccept(List.of(MediaType.parseMediaType(
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document")));
 
             HttpEntity<String> entity = new HttpEntity<>(headers);
 
@@ -139,7 +138,7 @@ public class ReportController {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // ⚠ Xem kỹ log ở đây nếu lỗi
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
         }
     }

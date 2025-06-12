@@ -99,8 +99,8 @@ public class ExamStructureController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=baocao_cautruc.docx")
                 .contentLength(docx.length)
-                .contentType(MediaType
-                        .parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                .contentType(MediaType.parseMediaType(
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
                 .body(resource);
     }
 

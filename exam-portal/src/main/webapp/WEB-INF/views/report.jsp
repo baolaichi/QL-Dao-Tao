@@ -51,8 +51,9 @@
         <a href="${pageContext.request.contextPath}/report/pdf/all" class="btn btn-success export-btn">
             <i class="fas fa-file-pdf"></i> Tải PDF
         </a>
-        <a href="/report/word/all" class="btn btn-outline-primary">Tải báo cáo cấu trúc đề thi (.docx)</a>
-
+    <a href="${pageContext.request.contextPath}/report/word/all" class="btn btn-outline-primary export-btn">
+        <i class="fas fa-file-word"></i> Tải Word (.docx)
+    </a>
     </div>
 
     <div class="form-section">
